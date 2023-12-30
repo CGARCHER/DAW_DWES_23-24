@@ -1,9 +1,6 @@
 
 HTTP: métodos, status, cabeceras, etc.
 
-![logo](https://rubensa.files.wordpress.com/2021/05/spring-boot-logo.png)
-
-- [Spring Boot para Profesores de la Comunidad de Madrid 2022-2022](#spring-boot-para-profesores-de-la-comunidad-de-madrid-2022-2022)
   - [HTTP](#http)
   - [Métodos HTTP](#métodos-http)
   - [Status HTTP](#status-http)

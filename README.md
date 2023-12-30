@@ -16,6 +16,9 @@ Este repositorio engloba el conjunto de materiales y proyectos del módulo impar
 1. [Introducción](docs/01-introduccion/README.md)
 2. [Instalación y configuración del entorno de trabajo](docs/02-instalacion/README.md)
 3. [HTTP: métodos, status, cabeceras, etc.](docs/03-api_rest/README.md)
+4. [Componentes de Spring Boot](docs/04-componentes/README.md)
+5. [SpringData y Bases de Datos en Spring](docs/05-springdata/README.md)
+
 
 ...
 EN CONSTRUCCIÓN!
