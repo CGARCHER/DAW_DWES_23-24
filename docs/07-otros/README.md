@@ -1,4 +1,4 @@
-	# Otros
+# Otros
 - [Profiles](#profiles)
 - [Documentar API Rest](#documentar-api-rest)
 	- [Documentar endpoints](#documentar-endpoints)	
