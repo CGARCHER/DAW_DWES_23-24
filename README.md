@@ -19,7 +19,7 @@ Este repositorio engloba el conjunto de materiales y proyectos del módulo impar
 4. [Componentes de Spring Boot](docs/04-componentes/README.md)
 5. [Spring Data y Bases de Datos en Spring](docs/05-springdata/README.md)
 6. [Spring Batch](docs/06-springbatch/README.md)
-7. [Otros: Profiles](docs/07-otros/README.md)
+7. [Otros: Profiles, OpenAPI](docs/07-otros/README.md)
 
 ...
 EN CONSTRUCCIÓN!
