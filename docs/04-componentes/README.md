@@ -8,8 +8,8 @@
             - [Peticiones con datos serializados](#peticiones-con-datos-serializados)
    - [Patron DTO](#patron-dto)
    - [Service](#service)
+   - [Exception](#exception)
    - [Postman](#postman)
-
 
 ## Componentes de Spring Boot
 Spring Boot nos ofrece una serie de componentes que nos ayudan a crear aplicaciones web de forma rápida y sencilla. Nuestros componentes principales se etiquetarán con @ para que el framework Spring lo reconozca (módulo de inversión de control y posterior inyección de dependencias). Cada uno tiene una misión en nuestra arquitectura:
@@ -163,6 +163,50 @@ public class UserService {
 } 
 ```
 
+## Exception
+
+Las excepciones permiten manejar errores de una manera organizada. En lugar de tener bloques de código dispersos para verificar errores, puedes encapsular la lógica de manejo de errores en excepciones. 
+El uso de excepciones hace que el código sea más limpio y fácil de entender. Los desarrolladores pueden ver inmediatamente dónde se manejan los errores. Las excepciones permiten separar la lógica de negocio de la lógica de manejo de errores, mejorando la mantenibilidad del código.   
+
+Primero definir un paquete para alojar las siguientes clases:
+
+Se define la excepción que se va a lanzar
+```java
+public class NotFoundException extends RuntimeException {
+    public NotFoundException(String message) {
+        super(message);
+    }
+}
+```
+
+Se define un bean que será usando para especificar la excepción que se produce.
+```java
+@Data
+@AllArgsConstructor
+public class ErrorResponse {
+    private String message;
+    private String details;
+    private int errorCode;
+}
+```
+
+Se define un handler que captura las excepciones y se monta la información de respuesta para la petición HTTP.
+```java
+@ControllerAdvice
+public class MyExceptionHandler {
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleCustomException(NotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(
+                ex.getMessage(),
+                "Detalles adicionales sobre el error.",
+                HttpStatus.BAD_REQUEST.value()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+}
+```
+Esto como se prueba, pues obviamente haciendo un throw de la excepción. 
 
 ## Postman
 
