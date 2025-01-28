@@ -168,7 +168,9 @@ public class UserService {
 Las excepciones permiten manejar errores de una manera organizada. En lugar de tener bloques de código dispersos para verificar errores, puedes encapsular la lógica de manejo de errores en excepciones. 
 El uso de excepciones hace que el código sea más limpio y fácil de entender. Los desarrolladores pueden ver inmediatamente dónde se manejan los errores. Las excepciones permiten separar la lógica de negocio de la lógica de manejo de errores, mejorando la mantenibilidad del código.   
 
-Primero definir un paquete para alojar las siguientes clases:
+Primero definir un paquete **exception** para alojar las siguientes clases:
+
+![exception](assets/package.png)
 
 Se define la excepción que se va a lanzar
 ```java
