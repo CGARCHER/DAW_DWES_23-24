@@ -243,6 +243,17 @@ Algunas de las anotaciones más comunes son:
 
 ```
 
+Recuerda añadir el starter de validación en tu proyecto.
+
+```xml
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+```
+
+
+
 ## Postman
 
 Para probar con un cliente nuestro servicio usaremos [Postman](https://www.postman.com/) que es una herramienta de
