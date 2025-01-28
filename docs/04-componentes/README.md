@@ -222,14 +222,14 @@ Bean Validation proporciona un conjunto de anotaciones que puedes usar para vali
 
 Algunas de las anotaciones más comunes son:
 
-@NotNull: indica que el atributo no puede ser nulo.
-@Size: indica el tamaño mínimo y/o máximo permitido para un atributo de tipo String o Collection.
-@Min y @Max: indican el valor mínimo y/o máximo permitido para un atributo numérico.
-@Email: indica que el atributo debe ser una dirección de correo electrónico válida.
-@Past y @Future: indican que un atributo de tipo Date o Calendar debe ser una fecha en el pasado o en el futuro, respectivamente.
-@Pattern: indica un patrón que debe cumplir un atributo de tipo String.
-@DecimalMin y @DecimalMax: indican el valor mínimo y/o máximo permitido para un atributo de tipo BigDecimal.
-@NotEmpty: indica que un atributo de tipo String, Collection o Map no puede ser vacío.
+- @NotNull: indica que el atributo no puede ser nulo.
+- @Size: indica el tamaño mínimo y/o máximo permitido para un atributo de tipo String o Collection.
+- @Min y @Max: indican el valor mínimo y/o máximo permitido para un atributo numérico.
+- @Email: indica que el atributo debe ser una dirección de correo electrónico válida.
+- @Past y @Future: indican que un atributo de tipo Date o Calendar debe ser una fecha en el pasado o en el futuro, respectivamente.
+- @Pattern: indica un patrón que debe cumplir un atributo de tipo String.
+- @DecimalMin y @DecimalMax: indican el valor mínimo y/o máximo permitido para un atributo de tipo BigDecimal.
+- @NotEmpty: indica que un atributo de tipo String, Collection o Map no puede ser vacío.
 
 ```java
 
