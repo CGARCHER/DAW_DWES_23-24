@@ -72,13 +72,18 @@ A la hora de crear consultas para nuestros repositorios, Spring Data JPA nos ofr
 ```java
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    // Consulta personalizada utilizando JPQL
-    @Query("SELECT u FROM User u WHERE u.email = ?1")
-    User findByEmail(String email);
+  // Consulta personalizada utilizando JPQL
+  @Query("SELECT u FROM User u WHERE u.email = ?1")
+  User findByEmail(String email);
 
-    // Consulta automática utilizando el nombre del método
-    Optional<User> findByUsername(String username);
+  // Consulta automática utilizando el nombre del método
+  Optional<User> findByUsername(String username);
+
+  // Consulta nativa utilizando SQL
+  @Query(value = "SELECT * FROM users WHERE phone_number = ?1", nativeQuery = true)
+  User findByPhoneNumber(String phoneNumber);
 }
+
 
 ```
 
@@ -302,7 +307,7 @@ Para configurar H2 en un proyecto, debemos agregar la siguiente dependencia en e
 
 Además agregar la siguiente configuración en el fichero .properties:
 
-```xml
+```properties
 spring.datasource.url=jdbc:h2:mem:testdb;NON_KEYWORDS=user,order
 spring.datasource.driverClassName=org.h2.Driver
 spring.datasource.username=sa
@@ -321,6 +326,26 @@ Una vez arranca la aplicación podemos acceder a la consola a través de este en
 
 > http://localhost:8080/h2-console.
 
+## MySql
+Para conectarnos a una base de datos Mysql, añadir la dependencias en el POM y añadir las propiedades en application.properties
+
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/nombre_bbdd
+spring.datasource.username=root
+spring.datasource.password=
+spring.jpa.show-sql=true
+spring.jpa.generate-ddl=true
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
+```
+
+```xml
+   <!-- MySQL JDBC Driver -->
+    <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+    </dependency>
+```
 
 
 
