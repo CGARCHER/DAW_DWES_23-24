@@ -9,6 +9,7 @@
   - [Excepciones Personalizadas](#excepciones-personalizadas)
   - [Cargando Datos de Prueba](#cargando-datos-de-prueba)
   - [H2](#h2)
+  - [Mysql](#mysql)
 
 ## Spring Data y Spring Data JPA
 
@@ -327,7 +328,7 @@ Una vez arranca la aplicación podemos acceder a la consola a través de este en
 > http://localhost:8080/h2-console.
 
 ## MySql
-Para conectarnos a una base de datos Mysql, añadir la dependencias en el POM y añadir las propiedades en application.properties
+Para conectarnos a una base de datos Mysql, añadir la dependencia en el POM y añadir las propiedades en application.properties .
 
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/nombre_bbdd
