@@ -9,7 +9,6 @@
    - [Patron DTO](#patron-dto)
    - [Service](#service)
    - [Exception](#exception)
-   - [Valid](#valid)
    - [Postman](#postman)
 
 ## Componentes de Spring Boot
@@ -209,50 +208,7 @@ public class MyExceptionHandler {
     }
 }
 ```
-Esto como se prueba, pues obviamente haciendo un throw de la excepción. 
-
-## Valid
-
-La anotación @Valid ayuda a que Spring Boot valide el request antes de ejecutar el método.
-Bean Validation proporciona un conjunto de anotaciones que puedes usar para validar los atributos de una clase.
-
-```java
-    @Valid @RequestBody PersonDTO personDTO
-```
-
-Algunas de las anotaciones más comunes son:
-
-- @NotNull: indica que el atributo no puede ser nulo.
-- @Size: indica el tamaño mínimo y/o máximo permitido para un atributo de tipo String o Collection.
-- @Min y @Max: indican el valor mínimo y/o máximo permitido para un atributo numérico.
-- @Email: indica que el atributo debe ser una dirección de correo electrónico válida.
-- @Past y @Future: indican que un atributo de tipo Date o Calendar debe ser una fecha en el pasado o en el futuro, respectivamente.
-- @Pattern: indica un patrón que debe cumplir un atributo de tipo String.
-- @DecimalMin y @DecimalMax: indican el valor mínimo y/o máximo permitido para un atributo de tipo BigDecimal.
-- @NotEmpty: indica que un atributo de tipo String, Collection o Map no puede ser vacío.
-
-```java
-
-    @NotEmpty(message = "El nombre no puede estar vacío")
-    @Size(min = 2, message = "El nombre debe tener al menos 2 caracteres")
-    private String name;
-
-    @NotEmpty(message = "El apellido no puede estar vacío")
-    @Size(min = 2, message = "El nombre debe tener al menos 2 caracteres")
-    private String appl;
-
-```
-
-Recuerda añadir el starter de validación en tu proyecto.
-
-```xml
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-validation</artifactId>
-		</dependency>
-```
-
-
+Recuerda realizar el thrown de la excepción en la lógica para que se ejecute este flujo creado. 
 
 ## Postman
 
