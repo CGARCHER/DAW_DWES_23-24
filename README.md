@@ -17,9 +17,11 @@ Este repositorio engloba el conjunto de materiales y proyectos del módulo impar
 2. [Instalación y configuración del entorno de trabajo](docs/02-instalacion/README.md)
 3. [HTTP: métodos, status, cabeceras, etc.](docs/03-api_rest/README.md)
 4. [Componentes de Spring Boot](docs/04-componentes/README.md)
-5. [Spring Data y Bases de Datos en Spring](docs/05-springdata/README.md)
-6. [Spring Batch](docs/06-springbatch/README.md)
-7. [Otros: Profiles, OpenAPI](docs/07-otros/README.md)
+5. [Spring Validation](docs/05-springvalidation/README.md)
+6. [Spring Data y Bases de Datos en Spring](docs/05-springdata/README.md)
+7. [Spring Batch](docs/07-springbatch/README.md)
+8. [Spring Security](docs/08-springbatch/README.md)
+9. [Otros: Profiles, OpenAPI](docs/07-otros/README.md)
 
 ...
 EN CONSTRUCCIÓN!
