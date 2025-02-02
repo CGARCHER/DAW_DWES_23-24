@@ -1,5 +1,5 @@
 
-## Valid
+## Spring Validation @Valid
 
 La anotación @Valid ayuda a que Spring Boot valide el request antes de ejecutar el método.
 Bean Validation proporciona un conjunto de anotaciones que puedes usar para validar los atributos de una clase.
