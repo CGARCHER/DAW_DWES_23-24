@@ -3,14 +3,13 @@
 - [Documentar API Rest](#documentar-api-rest)
 	- [Documentar endpoints](#documentar-endpoints)	
 - [OpenAPI generator](#openapi-generator)
+- [MapStruct](#mapstruct)
 
 ## Profiles
-
 Dado que las aplicaciones se pueden ejecutar en diferentes entornos(Local, desarrollo, preproducción o producción). La información almacenada en los ficheros .properties puede
 variar dependiendo de cada entorno, como por ejemplo: la configuración de acceso a una BBDD, cada entorno tiene su propia BBDD. La nomenclatura del fichero .properties será `application-{nombre_perfil}.properties`
 
 Por ejemplo, en local voy a trabajar con una BBDD H2 y en el entorno de desarrollo se está usando una BBDD postgres.
-
 `application-local.properties`:
 ```properties
 spring.datasource.url=jdbc:h2:mem:testdb;NON_KEYWORDS=pokemon,coach
@@ -260,6 +259,79 @@ public class DishController implements DishesApi {
 
 ```
 Arranca la aplicación y accede a swagger.
+
+## MapStruct
+
+MapStruct es una herramienta de generación de código en Java que simplifica la implementación de mapeos entre objetos de diferentes tipos, especialmente en aplicaciones Spring Boot. Su principal objetivo es reducir la cantidad de código repetitivo y propenso a errores que se escribe manualmente para convertir datos entre entidades, DTOs (Data Transfer Objects) y otros modelos.
+
+MapStruct genera automáticamente clases de mapeo en tiempo de compilación, lo que garantiza un alto rendimiento y seguridad de tipos. Además, se integra perfectamente con Spring Boot, permitiendo inyectar los mapeadores generados como beans de Spring. Esto lo convierte en una opción ideal para aplicaciones que requieren una gestión eficiente y limpia de transformaciones de datos.
+
+```xml
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.5.5.Final</version>
+		</dependency>
+```
+
+Para que la compilación del proyecto se ejecute de formar correcta, hace falta añadir/modificar el plugin maven-compiler-plugin
+que se encarga de procesar las anotaciones de lombok y mapstruct para generar el código final.
+
+```xml
+<plugin>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <configuration>
+    <annotationProcessorPaths>
+      <path>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+      </path>
+      <path>
+        <groupId>org.mapstruct</groupId>
+        <artifactId>mapstruct-processor</artifactId>
+        <version>1.5.5.Final</version>
+      </path>
+      <path>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok-mapstruct-binding</artifactId>
+        <version>0.2.0</version>
+      </path>
+    </annotationProcessorPaths>
+  </configuration>
+</plugin>
+```
+
+ **Lombok-MapStruct-Binding**: Proporciona integración entre Lombok y MapStruct, permitiendo que ambos trabajen juntos sin problemas, porque mapstruct necesita usar los métodos de clases y necesita que se genere previamente antes de generar la implementación del mapper.
+
+```java
+	@Mapper(componentModel = "spring")
+	public interface ProductMapper {
+		ProductDTO productToProductDTO(Product product);
+		Product productDTOToProduct(ProductDTO productDTO);
+	}
+```
+
+En el caso de los nombres de los atributos en las clases sean diferente, hay que especificar justo encima de la definición, la correlación de los campos.
+
+```java
+	@Mapping(source = "fullName", target = "name")
+	@Mapping(source = "emailAddress", target = "email")
+	EmployeeDTO employeeToEmployeeDTO(Employee employee);
+```
+
+Además si se necesita reutilzar un mapper, dado que una clase que contiene un atributo de otra clase, se tiene que especificar el mapper del atributo contenido.
+
+```java
+@Mapper(componentModel = "spring", uses = PlayerMapper.class)
+public interface TournamentMapper
+```
+
+Realizar una **maven install** del proyecto, observar la carpeta **target**, en generated-source, se encuentra la implementación del mapper.
+
+
+
 
 
 
