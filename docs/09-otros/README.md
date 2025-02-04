@@ -223,7 +223,7 @@ Además del siguiente plugin
 
 ```
 
-Ejecuta el comando mvn install para que se generen la clases, observa que en targer se han generado los endpoint(Api) y su correspondiente DTO.
+Ejecuta el comando mvn install para que se generen la clases, observa que en target se han generado los endpoint(Api) y su correspondiente DTO.
 
  ![targer-gen](assets/genfiles.png)
  
@@ -270,7 +270,7 @@ MapStruct genera automáticamente clases de mapeo en tiempo de compilación, lo 
 		<dependency>
 			<groupId>org.mapstruct</groupId>
 			<artifactId>mapstruct</artifactId>
-			<version>1.5.5.Final</version>
+			<version>1.6.3</version>
 		</dependency>
 ```
 
@@ -291,7 +291,7 @@ que se encarga de procesar las anotaciones de lombok y mapstruct para generar el
       <path>
         <groupId>org.mapstruct</groupId>
         <artifactId>mapstruct-processor</artifactId>
-        <version>1.5.5.Final</version>
+        <version>1.6.3</version>
       </path>
       <path>
         <groupId>org.projectlombok</groupId>
