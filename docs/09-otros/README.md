@@ -4,6 +4,7 @@
 	- [Documentar endpoints](#documentar-endpoints)	
 - [OpenAPI generator](#openapi-generator)
 - [MapStruct](#mapstruct)
+- [Java Streams](#java-streams)
 
 ## Profiles
 Dado que las aplicaciones se pueden ejecutar en diferentes entornos(Local, desarrollo, preproducción o producción). La información almacenada en los ficheros .properties puede
@@ -331,7 +332,60 @@ public interface TournamentMapper
 Realizar una **maven install** del proyecto, observar la carpeta **target**, en generated-source, se encuentra la implementación del mapper.
 
 
+## Java Streams
 
+Tutorial inicial -> https://medium.com/be-tech-with-santander/programaci%C3%B3n-en-java-java-stream-para-dummies-428258c03688
+
+### ¿Qué son los Streams y qué aportan?
+Los Streams fueron introducidos en **Java 8** para proporcionar una forma más funcional y declarativa de procesar datos. Permiten a los desarrolladores escribir código conciso y expresivo para manipular colecciones de datos mediante una serie de operaciones que pueden ser paralelizadas fácilmente para mejorar el rendimiento.
+
+### Ventajas de usar Streams:
+- **Declarativo**: Permiten describir el _qué_ hacer con los datos en lugar del _cómo_ hacerlo.
+- **Conciso**: Reducen la cantidad de código comparado con los enfoques imperativos.
+- **Paralelización**: Facilitan la paralelización de operaciones para mejorar el rendimiento.
+- **Legibilidad**: Hacen que el código sea más fácil de leer y mantener.
+
+### Elementos de Entrada, Intermedios y Terminales
+- **Entrada**: La fuente de datos que debe ser una colección.
+- **Operaciones Intermedias**: Transforman la secuencia de elementos y devuelven otro Stream.
+- **Operaciones Finales**: Procesan el Stream y devuelven un resultado o efecto secundario.
+
+### Ejemplo de Uso Imperativo vs. Uso con Streams
+
+- **forEach**: Aplica una acción a cada elemento del Stream. Es una operación terminal que no devuelve ningún resultado, solo ejecuta la acción especificada para cada elemento. Ejemplo:
+
+	**Imperativo:**
+- 
+	```java
+	List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "David");
+		for (String name : names) {
+			System.out.println(name);
+		}
+	```
+	
+	**Stream:**
+	```java
+	List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "David");
+	names.stream().forEach(System.out::println);
+	```
+- **Count**:
+- **AnyMatch**:
+- **Collect**:
+
+#### Ejemplo con `filter` y `map`
+
+**Imperativo:**
+
+```java
+List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "David");
+List<String> filteredNames = new ArrayList<>();
+for (String name : names) {
+    if (name.startsWith("A")) {
+        filteredNames.add(name.toUpperCase());
+    }
+}
+System.out.println(filteredNames); // [ALICE]
+```
 
 
 
