@@ -1,5 +1,6 @@
 # Otros
 - [Profiles](#profiles)
+- [Logger](#logger)
 - [Documentar API Rest](#documentar-api-rest)
 	- [Documentar endpoints](#documentar-endpoints)	
 - [OpenAPI generator](#openapi-generator)
@@ -39,6 +40,94 @@ Luego en el fichero `application.properties` se define que prefil está activo, 
 ```properties
 spring.profiles.active=local
 ```
+
+## Logger
+
+El registro (logging) es una parte crucial de cualquier aplicación, ya que permite a los desarrolladores rastrear la ejecución de la aplicación, depurar problemas y monitorear el comportamiento del sistema. Spring Boot facilita la configuración y el uso de loggers mediante la integración con varias bibliotecas de registro populares como Logback, Log4j2 y Java Util Logging (JUL).
+
+### Configuración de Logback (predeterminado)
+
+Spring Boot usa Logback como la implementación de registro predeterminada. No se requiere ninguna configuración adicional para comenzar a usar Logback, ya que viene preconfigurado con Spring Boot Starter.
+
+### Uso del Logger en tu Código
+
+Para usar el logger en tus clases de Spring Boot, puedes seguir estos pasos:
+
+### Inyección del Logger
+
+Spring Boot recomienda el uso de SLF4J (Simple Logging Facade for Java) como una abstracción de registro. Aquí hay un ejemplo de cómo inyectar y usar el logger en una clase:
+
+```java
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyService {
+
+    private static final Logger logger = LoggerFactory.getLogger(MyService.class);
+
+    public void performTask() {
+        logger.info("Starting task");
+        try {
+            // Lógica del negocio
+        } catch (Exception e) {
+            logger.error("Error occurred while performing task", e);
+        }
+        logger.info("Task completed");
+    }
+}
+```
+
+### Niveles de Registro
+
+SLF4J soporta varios niveles de registro:
+
+- `TRACE`: Información de traza detallada.
+- `DEBUG`: Información de depuración.
+- `INFO`: Información general.
+- `WARN`: Advertencias que podrían no ser críticas.
+- `ERROR`: Errores que requieren atención.
+
+### Configuración de Niveles de Registro
+
+Puedes configurar los niveles de registro para diferentes paquetes o clases en el archivo `application.properties` o `application.yml`.
+
+#### Usando `application.properties`
+
+```properties
+logging.level.root=INFO
+logging.level.com.example.myapp=DEBUG
+```
+
+#### Usando `application.yml`
+
+```yaml
+logging:
+  level:
+    root: INFO
+    com.example.myapp: DEBUG
+```
+
+### Creación de un Archivo de Log
+
+Para crear y configurar un archivo de log, puedes modificar el archivo `application.properties` o `application.yml` de la siguiente manera:
+
+#### Usando `application.properties`
+
+```properties
+logging.file.name=application.log
+```
+
+#### Usando `application.yml`
+
+```yaml
+logging:
+  file:
+    name: application.log
+```
+
+Estos ajustes configurarán Spring Boot para que cree un archivo de log llamado `application.log` en el directorio predeterminado.
 
 ## Documentar API Rest
 
