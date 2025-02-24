@@ -20,7 +20,7 @@ Este repositorio engloba el conjunto de materiales y proyectos del módulo impar
 5. [Spring Validation](docs/05-springvalidation/README.md)
 6. [Spring Data y Bases de Datos en Spring](docs/06-springdata/README.md)
 7. [Spring Batch](docs/07-springbatch/README.md)
-8. [Spring Security](docs/08-springbatch/README.md)
+8. [Spring Security](docs/08-springbatch/README.md) Próximamente!
 9. [Otros: Profiles, Logger, OpenAPI](docs/09-otros/README.md)
 
 Mucho a mucho!
