@@ -202,4 +202,5 @@ public class MyJobScheduler {
 ```
 
 La configuración del cron o fixedDelay lo suyo es que ubicarla en el fichero en properties, para que se encuentre externalizada para agilizar los cambios.
+CopyRight Alfonso
 
