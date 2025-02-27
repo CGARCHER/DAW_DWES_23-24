@@ -3,7 +3,8 @@
 - [Logger](#logger)
 - [Documentar API Rest](#documentar-api-rest)
 	- [Documentar endpoints](#documentar-endpoints)	
-- [OpenAPI generator](#openapi-generator)
+- [OpenAPI Especificación](#openapi-especificación)
+- [OpenAPI Cliente](#openapi-cliente)
 - [MapStruct](#mapstruct)
 - [Java Streams](#java-streams)
 
@@ -250,7 +251,7 @@ Finalmente podemos acceder a la ruta en: http://localhost:XXXX/swagger-ui/index.
 Se puede obtener el documento openapi en http://localhost:8080/v3/api-docs.yaml. Usando el patrón API First, este documento es como un contrato de diseño de lo que se va a implementar, este documento se construye antes de comenzar el desarrollo, lo cual permite al equipo de fronted y backend definir que se necesita. Una vez validado el documento, se comienza con el desarrollo.
 Más información en https://swagger.io/docs/specification/basic-structure/
 
-## OpenAPI generator Especificación
+## OpenAPI Especificación
 **Nota**: Proyecto base ApiFirst [repositorio](https://github.com/CGARCHER/api-first-example/tree/main)
 
 Partiendo un fichero de definición API(Por ejemplo: openapi.yaml), se puede generar mediante un plugin los dtos y endpoint defindos.
@@ -349,7 +350,7 @@ public class DishController implements DishesApi {
 ```
 Arranca la aplicación y accede a swagger.
 
-## OpenAPI generator Cliente
+## OpenAPI Cliente
 Requiere de la configuración de otro plugin. Revisar proyecto api-client de este [repositorio](https://github.com/CGARCHER/api-first-example/blob/main/api-client/pom.xml).
 
 Añadir la dependencia generada y definir el fichero de configuración para inicializar los objetos correspondientes.
