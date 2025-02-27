@@ -52,7 +52,7 @@ https://docs.spring.io/spring-batch/reference/step/tasklet.html
 
 ## Hello World
 
-Partiendo de un proyecto de spring boot con la dependencia de spring batch y h2 añadida en el pom(Ojo si usas otra base de datos, hay que cargar el schema que esta en spring batch core).
+Partiendo de un proyecto de spring boot con la dependencia de spring batch y h2 añadida en el pom(Ojo si usas otra base de datos, hay que cargar el schema.sql que está en la dependencia de spring batch core).
 
 Definir un fichero de configuración, donde definirá los jobs y sus correspondientes steps.
 
@@ -95,23 +95,6 @@ public class BatchConfig {
                 .tasklet(helloWorldTasklet, platformTransactionManager)
                 .build();
     }
-}
-```
-
-
-```java
-import org.springframework.batch.core.StepContribution;
-import org.springframework.batch.core.scope.context.ChunkContext;
-import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.repeat.RepeatStatus;
-
-public class PoleTasklet implements Tasklet{
-
-	@Override
-	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		System.out.println("Nano pole");
-		return RepeatStatus.FINISHED;
-	}
 }
 ```
 
