@@ -26,8 +26,8 @@ Una vez se arranca una aplicación con Spring Batch, se establece una conexión 
 
 ## Job y Step
 
-Job -> El Job es la representación del proceso. Un proceso, a su vez, es un contenedor de pasos (steps).
-Step ->  Un step (paso) es un elemento independiente dentro de un Job (un proceso) que representa una de las fases de las que está compuesto dicho proceso. Un proceso (Job) debe tener, al menos, un step.
+**Job**: El Job es la representación del proceso. Un proceso, a su vez, es un contenedor de pasos (steps).
+**Step**  Un step (paso) es un elemento independiente dentro de un Job (un proceso) que representa una de las fases de las que está compuesto dicho proceso. Un proceso (Job) debe tener, al menos, un step.
 
 
 Cada uno de estos steps suele constar de tres partes:

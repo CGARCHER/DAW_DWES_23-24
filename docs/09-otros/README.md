@@ -247,12 +247,11 @@ Finalmente podemos acceder a la ruta en: http://localhost:XXXX/swagger-ui/index.
 ![Swagger](assets/swagger.png)
 
 
-Se puede obtener el documento openapi en http://localhost:8080/v3/api-docs. Copia el contenido del fichero en https://editor.swagger.io/ y descarga el fichero con formato .yaml
-Usando el patrón API First, este documento es como un contrato de diseño de lo que se va a implemetar, este documento se construye antes de comenzar el desarrollo, lo cual permite al equipo de fronted y backend definir que se necesita. Una vez validado el documento, se comienza con el desarrollo.
-
+Se puede obtener el documento openapi en http://localhost:8080/v3/api-docs.yaml. Usando el patrón API First, este documento es como un contrato de diseño de lo que se va a implementar, este documento se construye antes de comenzar el desarrollo, lo cual permite al equipo de fronted y backend definir que se necesita. Una vez validado el documento, se comienza con el desarrollo.
 Más información en https://swagger.io/docs/specification/basic-structure/
 
-## OpenAPI generator
+## OpenAPI generator Especificación
+**Nota**: Proyecto base ApiFirst [repositorio](https://github.com/CGARCHER/api-first-example/tree/main)
 
 Partiendo un fichero de definición API(Por ejemplo: openapi.yaml), se puede generar mediante un plugin los dtos y endpoint defindos.
 Primer alojar el fichero .yaml en /src/main/resources.
@@ -318,7 +317,7 @@ Ejecuta el comando mvn install para que se generen la clases, observa que en tar
  ![targer-gen](assets/genfiles.png)
  
 
-A partir de ahora se puede definir un controlador que implemente DishesApi, crea un nuevo controlador que implemente dicha clase y sobreescriba sus métodos.
+A partir de ahora se puede definir un controlador que implemente DishesApi, crea un nuevo controlador que implemente dicha clase y sobreescriba sus métodos(Luego se tendrá que crear toda la estructura de capas.
 
 
 ```java
@@ -349,6 +348,38 @@ public class DishController implements DishesApi {
 
 ```
 Arranca la aplicación y accede a swagger.
+
+## OpenAPI generator Cliente
+Requiere de la configuración de otro plugin. Revisar proyecto api-client de este [repositorio](https://github.com/CGARCHER/api-first-example/blob/main/api-client/pom.xml).
+
+Añadir la dependencia generada y definir el fichero de configuración para inicializar los objetos correspondientes.
+
+```xml
+<dependency>
+    <groupId>org.example.api</groupId>
+    <artifactId>api-client</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+</dependency>
+```
+
+```java
+@Configuration
+public class ApiClientConfig {
+
+	@Bean
+	public ApiClient apiClient() {
+		ApiClient apiClient = new ApiClient();
+		//Mover la URL al properties mejor!!!
+		apiClient.setBasePath("http://localhost:8080/"); // URL base de la API
+		return apiClient;
+	}
+
+	@Bean
+	public ArtisanControllerApi artisanControllerApi(ApiClient apiClient) {
+		return new ArtisanControllerApi(apiClient);
+	}
+}
+
 
 ## MapStruct
 
