@@ -32,9 +32,9 @@ Step ->  Un step (paso) es un elemento independiente dentro de un Job (un proces
 
 Cada uno de estos steps suele constar de tres partes:
 
--ItemReader: se encarga de la lectura del procesamiento por lotes. Esta lectura puede ser, por ejemplo, de una base datos; o también podría ser de un broker de mensajes o bien un fichero csv, xml, json, etc.
--ItemProccessor: se encarga de transformar items previamente leídos. Esta transformación además de incluir cambios en el formato puede incluir filtrado de datos o lógica de negocio.
--ItemWriter: este elemento es lo opuesto al itemReader. Se encarga de la escritura de los ítems. Esta puede ser inserciones en una base de datos, en un fichero csv, en un broker de mensajes, etc.
+**ItemReader**: se encarga de la lectura del procesamiento por lotes. Esta lectura puede ser, por ejemplo, de una base datos; o también podría ser de un broker de mensajes o bien un fichero csv, xml, json, etc.
+**ItemProccessor**: se encarga de transformar items previamente leídos. Esta transformación además de incluir cambios en el formato puede incluir filtrado de datos o lógica de negocio.
+**ItemWriter**: este elemento es lo opuesto al itemReader. Se encarga de la escritura de los ítems. Esta puede ser inserciones en una base de datos, en un fichero csv, en un broker de mensajes, etc.
 
 Está centrado a trabajar con los ítems de manera unitaria. Para el procesamiento por lotes podemos definir de qué tamaño será el número de ítems en el que se organizará el procesamiento por lotes. Si cogemos un tamaño 20, leerá, procesará y escribirá de 20 en 20. Este número de ítems que se procesarán en cada uno de los commits que realice el step se denomina chunk.
 
@@ -52,22 +52,9 @@ https://docs.spring.io/spring-batch/reference/step/tasklet.html
 
 ## Hello World
 
-Partiendo de un proyecto de spring boot con la dependecia de batch y h2 añadida en el pom.
+Partiendo de un proyecto de spring boot con la dependencia de spring batch y h2 añadida en el pom(Ojo si usas otra base de datos, hay que cargar el schema que esta en spring batch core).
 
-Ir al fichero Application y añadir la etiqueta @EnableScheduling
-
-```java
-
-@SpringBootApplication
-@EnableScheduling
-public class BatchApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(BatchApplication.class, args);
-	}
-}
-```
-
-Definir un fichero de configuración, donde definirá los jobs y sus correspondieste steps.
+Definir un fichero de configuración, donde definirá los jobs y sus correspondientes steps.
 
 
 ```java
@@ -81,40 +68,32 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
+@EnableBatchProcessing
+@EnableScheduling
 public class BatchConfig {
-	
-    @Bean
-    protected Step step1(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new StepBuilder("step1", jobRepository)
-          .tasklet(poleTasklet(), transactionManager)
-          .build();
-    }
-    
-    @Bean
-    protected Step step2(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-        return new StepBuilder("step2", jobRepository)
-          .tasklet(winTasklet(), transactionManager)
-          .build();
-    }
-    
-    @Bean
-    public PoleTasklet poleTasklet() {
-	    	PoleTasklet tasklet = new PoleTasklet();
-	    	return tasklet;
-    }
-    
-    @Bean
-    public WinTasklet winTasklet() {
-	    	WinTasklet tasklet = new WinTasklet();
-	    	return tasklet;
+
+    private final JobRepository jobRepository;
+    private final PlatformTransactionManager platformTransactionManager;
+    private final HelloWorldTasklet helloWorldTasklet;
+
+    public BatchConfig(JobRepository jobRepository, PlatformTransactionManager platformTransactionManager, HelloWorldTasklet helloWorldTasklet) {
+        this.jobRepository = jobRepository;
+        this.platformTransactionManager = platformTransactionManager;
+        this.helloWorldTasklet = helloWorldTasklet;
     }
 
     @Bean
-    public Job helloJob(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
+    public Job helloJob() {
         return new JobBuilder("helloJob", jobRepository)
-          .start(step1(jobRepository, transactionManager))
-          .next(step2(jobRepository, transactionManager))
-          .build();
+                .start(step())
+                .build();
+    }
+
+    @Bean
+    protected Step step() {
+        return new StepBuilder("step", jobRepository)
+                .tasklet(helloWorldTasklet, platformTransactionManager)
+                .build();
     }
 }
 ```
@@ -142,14 +121,16 @@ import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.stereotype.Component;
 
-public class WinTasklet implements Tasklet{
+@Component
+public class HelloWorldTasklet implements Tasklet {
 
-	@Override
-	public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-		System.out.println("Nano wins");
-		return RepeatStatus.FINISHED;
-	}
+    @Override
+    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception{
+        System.out.println("Hello world");
+        return RepeatStatus.FINISHED;
+    }
 }
 ```
 
@@ -171,33 +152,31 @@ Indica un retraso fijo en milisegundos entre el final de la ejecución actual de
 Ejemplo de configuración para programar la ejecución de un JOB.
  
 ```java
-import java.util.Date;
-
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.batch.core.JobParametersInvalidException;
-import org.springframework.batch.core.converter.JobParametersConversionException;
 import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
-import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRestartException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MyJobScheduler {
+public class MySchedule {
 
-    @Autowired
-    private JobLauncher jobLauncher;
+    private final JobLauncher jobLauncher;
+    private final Job helloJob;
 
-    @Autowired
-    private Job job;
 
-    @Scheduled(cron = "0/10 * * * * ?") // Se ejecuta cada 10 segundos.
-    public void scheduleJob() throws JobParametersConversionException, JobExecutionAlreadyRunningException, JobRestartException, JobInstanceAlreadyCompleteException, JobParametersInvalidException {
-        jobLauncher.run(job, new JobParametersBuilder().addDate("timestamp", new Date()).toJobParameters());
+    public MySchedule(JobLauncher jobLauncher, Job helloJob) {
+        this.jobLauncher = jobLauncher;
+        this.helloJob = helloJob;
     }
+
+    @Scheduled(fixedDelayString = "${my.scheduled.task.fixed.delay}")
+    public void performJob() throws Exception {
+        jobLauncher.run(helloJob, new JobParametersBuilder()
+                .addLong("time", System.currentTimeMillis()) // Parámetro único
+                .toJobParameters());
+    }
+
 }
 ```
 
